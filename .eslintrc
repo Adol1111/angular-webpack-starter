@@ -1,0 +1,7 @@
+{
+  "parser": "babel-eslint",
+  "extends": "angular",
+  "rules": {
+    "angular/document-service": 1
+  }
+}
