@@ -1,0 +1,8 @@
+# Ignore built files
+dist/
+
+# Ignore coverage files
+node_modules/
+
+# Ignore document (use $document)
+# src/main.js

@@ -22,11 +22,13 @@ const WebpackMd5Hash = require('webpack-md5-hash');
 const ENV = process.env.NODE_ENV;
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 8080;
+const CDN_HOST = process.env.CDN_HOST;
 const METADATA = webpackMerge(commonConfig.metadata, {
   host: HOST,
   port: PORT,
   ENV: ENV,
-  HMR: false
+  HMR: false,
+  CDN_HOST: CDN_HOST,
 });
 
 module.exports = webpackMerge(commonConfig, {
@@ -130,6 +132,7 @@ module.exports = webpackMerge(commonConfig, {
         'ENV': JSON.stringify(METADATA.ENV),
         'NODE_ENV': JSON.stringify(METADATA.ENV),
         'HMR': METADATA.HMR,
+        'CDN_HOST': JSON.stringify(METADATA.CDN_HOST),
       }
     }),
 
@@ -186,6 +189,7 @@ module.exports = webpackMerge(commonConfig, {
 
   eslint: {
     configFile: helpers.root('.eslintrc'),
+    ignorePath: helpers.root('.eslintignore'),
     emitErrors: true,
     failOnError: true,
     resourcePath: 'src'

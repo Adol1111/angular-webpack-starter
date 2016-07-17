@@ -17,13 +17,15 @@ const DefinePlugin = require('webpack/lib/DefinePlugin');
 /**
  * Webpack Constants
  */
-const ENV = process.env.ENV = process.env.NODE_ENV = 'dev';
+const ENV = process.env.ENV = process.env.NODE_ENV = 'develop';
 const HMR = helpers.hasProcessFlag('hot');
+const CDN_HOST = process.env.CDN_HOST;
 const METADATA = webpackMerge(commonConfig.metadata, {
   host: 'localhost',
   port: 3000,
   ENV: ENV,
-  HMR: HMR
+  HMR: HMR,
+  CDN_HOST: CDN_HOST,
 });
 
 /**
@@ -113,12 +115,14 @@ module.exports = webpackMerge(commonConfig, {
         'ENV': JSON.stringify(METADATA.ENV),
         'NODE_ENV': JSON.stringify(METADATA.ENV),
         'HMR': METADATA.HMR,
+        'CDN_HOST': JSON.stringify(METADATA.CDN_HOST),
       }
     })
   ],
 
   eslint: {
     configFile: helpers.root('.eslintrc'),
+    ignorePath: helpers.root('.eslintignore'),
     emitErrors: false,
     failOnError: false,
     resourcePath: 'src'

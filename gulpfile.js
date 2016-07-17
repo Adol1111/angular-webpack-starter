@@ -34,6 +34,7 @@ gulp.task('config', function () {
     }
 
     let env = process.env.NODE_ENV;
+    let cdn_host = getOSSUrl(pkg['cdn-directory'], env, pkg.version);
 
     if (isUseCDN) {
         dest.dist = path.join(root, env);
@@ -44,13 +45,12 @@ gulp.task('config', function () {
 
     process.env.HOST = pkg.site_url[env];
     process.env.PORT = pkg.site_port[env];
+    process.env.CDN_HOST = cdn_host;
 
     config = require('./build/webpack.pro.js');
 
     config.output.path = dest.app;
-    config.output.publicPath = getOSSUrl(pkg['cdn-directory'], env, pkg.version);
-
-    console.log(config.output.publicPath)
+    config.output.publicPath = process.env.CDN_HOST;
 });
 
 gulp.task('webpack', ['clean', 'config'], function (cb) {
@@ -110,6 +110,8 @@ gulp.task('clean', function () {
 });
 
 gulp.task('watch', function (cb) {
+    process.env.CDN_HOST = '';
+
     // Start a webpack-dev-server
     var compiler = webpack(require('./build/webpack.dev'));
 
@@ -120,11 +122,11 @@ gulp.task('watch', function (cb) {
             modules: false
         },
         // server and middleware options
-    }).listen(8080, "localhost", function (err) {
+    }).listen(pkg.site_port.dev, "localhost", function (err) {
         if (err) throw new gutil.PluginError("webpack-dev-server", err);
         // Server listening
         gutil.log(gutil.colors.magenta("[webpack-dev-server]"),
-            gutil.colors.cyan("http://localhost:8080/webpack-dev-server/index.html"));
+            gutil.colors.cyan(`http://localhost:${pkg.site_port.dev}/webpack-dev-server/index.html`));
 
         // keep the server alive or continue?
         // callback();

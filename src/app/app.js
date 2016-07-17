@@ -4,5 +4,4 @@
 export const app = angular.module('app', []).config(function () {
 
 }).run(function ($rootScope) {
-  $rootScope.title = '123123123';
 });

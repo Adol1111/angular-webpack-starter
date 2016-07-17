@@ -5,7 +5,6 @@ import angular from 'angular';
 
 import {app} from 'app/app';
 
-// angular.bootstrap('app', app);
 function main() {
   angular.bootstrap(document, [app.name]);
 }
