@@ -48,8 +48,8 @@ module.exports = {
    * See: http://webpack.github.io/docs/configuration.html#entry
    */
   entry: {
-    'polyfills': './src/polyfills.js',
-    'vendor': './src/vendor.js',
+    //'polyfills': './src/polyfills.js',
+    //'vendor': './src/vendor.js',
     'main': './src/main.js'
   },
 
@@ -199,9 +199,9 @@ module.exports = {
      * See: https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
      * See: https://github.com/webpack/docs/wiki/optimization#multi-page-app
      */
-    new webpack.optimize.CommonsChunkPlugin({
-      name: helpers.reverse(['polyfills', 'vendor'])
-    }),
+    //new webpack.optimize.CommonsChunkPlugin({
+    //  name: helpers.reverse(['polyfills', 'vendor'])
+    //}),
 
     /*
      * Plugin: CopyWebpackPlugin
@@ -226,8 +226,10 @@ module.exports = {
      */
     new HtmlWebpackPlugin({
       template: 'src/index.html',
-      chunksSortMode: helpers.packageSort(['polyfills', 'vendor', 'main'])
-    }),
+      inject: true,
+      //chunksSortMode: helpers.packageSort(['polyfills', 'vendor', 'main']),
+      chunksSortMode: 'dependency'
+    })
 
     // new webpack.ProvidePlugin({
     //     $: "jquery",

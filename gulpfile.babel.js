@@ -9,6 +9,7 @@ const gulp = require('gulp'),
   del = require('del'),
   colorsSupported = require('supports-color'),
   webpack = require('webpack'),
+  portfinder = require('portfinder'),
   WebpackDevServer = require("webpack-dev-server");
 
 let pkg = require('./package.json'),
@@ -115,21 +116,27 @@ gulp.task('watch', function (cb) {
   // Start a webpack-dev-server
   var compiler = webpack(require('./build/webpack.dev'));
 
-  new WebpackDevServer(compiler, {
+  var server = new WebpackDevServer(compiler, {
     stats: {
       colors: colorsSupported,
       chunks: false,
       modules: false
     },
     // server and middleware options
-  }).listen(pkg.site_port.dev, "localhost", function (err) {
-    if (err) throw new gutil.PluginError("webpack-dev-server", err);
-    // Server listening
-    gutil.log(gutil.colors.magenta("[webpack-dev-server]"),
-      gutil.colors.cyan(`http://localhost:${pkg.site_port.dev}/webpack-dev-server/index.html`));
+  });
 
-    // keep the server alive or continue?
-    // callback();
+  portfinder.getPort({
+    port: pkg.site_port.dev
+  }, function (err, port) {
+    server.listen(port, "localhost", function (err) {
+      if (err) throw new gutil.PluginError("webpack-dev-server", err);
+      // Server listening
+      gutil.log(gutil.colors.magenta("[webpack-dev-server]"),
+        gutil.colors.(`Server started at http://localhost:${port}`));
+
+      // keep the server alive or continue?
+      // callback();
+    });
   });
 });
 

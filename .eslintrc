@@ -1,7 +1,10 @@
 {
   "parser": "babel-eslint",
-  "extends": "angular",
-  "rules": {
-    "angular/document-service": 1
+  "extends": "airbnb/base",
+  "plugins": [
+    "html"
+  ],
+  "globals": {
+    "APP_VERSION": true
   }
 }

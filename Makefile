@@ -4,11 +4,10 @@ ifndef JENKINS_HOME
 endif
 REPO_URL=$(shell git ls-remote --get-url)
 # REPO_NAME=$(shell basename $(REPO_URL))
-REPO_NAME=AppYunboWeb
+REPO_NAME=AppExampleWeb
 
 .PHONY: build
 build:
-	cd yunbo; \
 	export NVM_DIR=~/.nvm; \
 	export REPO_NAME=$(REPO_NAME); \
 	export NODE_ENV=$${TAG:0:3}; \
@@ -18,21 +17,25 @@ build:
 	npm install && \
 	npm run build;
 
+build-simple:
+	export REPO_NAME=$(REPO_NAME); \
+	export NODE_ENV=$${TAG:0:3}; \
+	npm run build;
+
 build-dev:
 	export TAG=dev_1; \
-	make build;
+	make build-simple;
 
 build-uat:
 	export TAG=uat_1; \
-	make build;
+	make build-simple;
 
 build-pro:
 	export TAG=pro_1; \
-	make build;
+	make build-simple;
 
 dev:
-	cd yunbo; \
-	grunt watch;
+	npm run start;
 
 tag-dev:
 	export TAG=dev_`date +%Y%m%d%H%M`; \

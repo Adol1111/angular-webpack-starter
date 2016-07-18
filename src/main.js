@@ -3,7 +3,7 @@
  */
 import angular from 'angular';
 
-import {app} from 'app/app';
+import { app } from './app/app';
 
 function main() {
   angular.bootstrap(document, [app.name]);
