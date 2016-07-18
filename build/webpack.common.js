@@ -48,8 +48,7 @@ module.exports = {
    * See: http://webpack.github.io/docs/configuration.html#entry
    */
   entry: {
-    //'polyfills': './src/polyfills.js',
-    //'vendor': './src/vendor.js',
+    'polyfills': 'babel-polyfill',
     'main': './src/main.js'
   },
 

@@ -1,10 +1,17 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb/base",
+  "extends": [
+    "airbnb/base",
+    "angular"
+  ],
   "plugins": [
     "html"
   ],
   "globals": {
     "APP_VERSION": true
+  },
+  "rules": {
+    "no-param-reassign": 0,
+    "quotes": [2, "single", {"avoidEscape": true, "allowTemplateLiterals": true}]
   }
 }

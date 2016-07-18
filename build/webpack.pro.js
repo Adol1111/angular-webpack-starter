@@ -181,10 +181,10 @@ module.exports = webpackMerge(commonConfig, {
    *
    * See: https://github.com/webpack/compression-webpack-plugin
    */
-    new CompressionPlugin({
-      regExp: /\.css$|\.html$|\.js$|\.map$/,
-      threshold: 2 * 1024
-    }),
+    // new CompressionPlugin({
+    //   regExp: /\.css$|\.html$|\.js$|\.map$/,
+    //   threshold: 2 * 1024
+    // }),
 
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
@@ -194,7 +194,7 @@ module.exports = webpackMerge(commonConfig, {
         return (
           module.resource &&
           module.resource.indexOf(
-            path.join(__dirname, '../node_modules')
+            helpers.root('node_modules')
           ) === 0
         )
       }

@@ -3,7 +3,9 @@
  */
 import angular from 'angular';
 
-export const app = angular.module('app', []).config(() => {
-
-}).run(() => {
+export const app = angular.module('app', []).component('app', {
+  template: `<div>{{test}}</div>`,
+  controller: ($scope) => {
+    $scope.test = '123123123';
+  },
 });

@@ -132,7 +132,7 @@ gulp.task('watch', function (cb) {
       if (err) throw new gutil.PluginError("webpack-dev-server", err);
       // Server listening
       gutil.log(gutil.colors.magenta("[webpack-dev-server]"),
-        gutil.colors.(`Server started at http://localhost:${port}`));
+        gutil.colors.green.bold(`Server started at http://localhost:${port}`));
 
       // keep the server alive or continue?
       // callback();

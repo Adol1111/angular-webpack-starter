@@ -6,6 +6,7 @@
  */
 
 const helpers = require('./helpers');
+const webpack = require('webpack');
 const webpackMerge = require('webpack-merge'); // used to merge webpack configs
 const commonConfig = require('./webpack.common.js'); // the settings that are common to prod and dev
 
@@ -117,7 +118,21 @@ module.exports = webpackMerge(commonConfig, {
         'HMR': METADATA.HMR,
         'CDN_HOST': JSON.stringify(METADATA.CDN_HOST),
       }
-    })
+    }),
+
+    // split vendor js into its own file
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module, count) {
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          module.resource.indexOf(
+            helpers.root('node_modules')
+          ) === 0
+        )
+      }
+    }),
   ],
 
   eslint: {
