@@ -1,11 +1,19 @@
 /**
  * Created by Raphael on 2016/7/17.
  */
-import angular from 'angular';
+class App {
+  constructor($document) {
+    this.$document = $document[0];
+    this.changeTitle();
+  }
+
+  changeTitle() {
+    this.$document.title = Math.random();
+  }
+}
 
 export const app = angular.module('app', []).component('app', {
-  template: `<div>{{test}}</div>`,
-  controller: ($scope) => {
-    $scope.test = '123123123';
-  },
+  template: `<button ng-click="ctrl.changeTitle()">修改title</button>`,
+  controller: App,
+  controllerAs: 'ctrl',
 });
