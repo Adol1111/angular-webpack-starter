@@ -98,33 +98,33 @@ module.exports = webpackMerge(commonConfig, {
    */
   plugins: [
 
-  /**
-   * Plugin: WebpackMd5Hash
-   * Description: Plugin to replace a standard webpack chunkhash with md5.
-   *
-   * See: https://www.npmjs.com/package/webpack-md5-hash
-   */
+    /**
+     * Plugin: WebpackMd5Hash
+     * Description: Plugin to replace a standard webpack chunkhash with md5.
+     *
+     * See: https://www.npmjs.com/package/webpack-md5-hash
+     */
     new WebpackMd5Hash(),
 
-  /**
-   * Plugin: DedupePlugin
-   * Description: Prevents the inclusion of duplicate code into your bundle
-   * and instead applies a copy of the function at runtime.
-   *
-   * See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
-   * See: https://github.com/webpack/docs/wiki/optimization#deduplication
-   */
+    /**
+     * Plugin: DedupePlugin
+     * Description: Prevents the inclusion of duplicate code into your bundle
+     * and instead applies a copy of the function at runtime.
+     *
+     * See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
+     * See: https://github.com/webpack/docs/wiki/optimization#deduplication
+     */
     new DedupePlugin(),
 
-  /**
-   * Plugin: DefinePlugin
-   * Description: Define free variables.
-   * Useful for having development builds with debug logging or adding global constants.
-   *
-   * Environment helpers
-   *
-   * See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
-   */
+    /**
+     * Plugin: DefinePlugin
+     * Description: Define free variables.
+     * Useful for having development builds with debug logging or adding global constants.
+     *
+     * Environment helpers
+     *
+     * See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
+     */
     // NOTE: when adding more properties make sure you include them in custom-typings.d.ts
     new DefinePlugin({
       'ENV': JSON.stringify(METADATA.ENV),
@@ -137,13 +137,13 @@ module.exports = webpackMerge(commonConfig, {
       }
     }),
 
-  /**
-   * Plugin: UglifyJsPlugin
-   * Description: Minimize all JavaScript output of chunks.
-   * Loaders are switched into minimizing mode.
-   *
-   * See: https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
-   */
+    /**
+     * Plugin: UglifyJsPlugin
+     * Description: Minimize all JavaScript output of chunks.
+     * Loaders are switched into minimizing mode.
+     *
+     * See: https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
+     */
     // NOTE: To debug prod builds uncomment //debug lines and comment //prod lines
     new UglifyJsPlugin({
       // beautify: true, //debug
@@ -174,13 +174,13 @@ module.exports = webpackMerge(commonConfig, {
       comments: false //prod
     }),
 
-  /**
-   * Plugin: CompressionPlugin
-   * Description: Prepares compressed versions of assets to serve
-   * them with Content-Encoding
-   *
-   * See: https://github.com/webpack/compression-webpack-plugin
-   */
+    /**
+     * Plugin: CompressionPlugin
+     * Description: Prepares compressed versions of assets to serve
+     * them with Content-Encoding
+     *
+     * See: https://github.com/webpack/compression-webpack-plugin
+     */
     // new CompressionPlugin({
     //   regExp: /\.css$|\.html$|\.js$|\.map$/,
     //   threshold: 2 * 1024
@@ -189,6 +189,7 @@ module.exports = webpackMerge(commonConfig, {
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
+      chunks: ['main'],
       minChunks: function (module, count) {
         // any required modules inside node_modules are extracted to vendor
         return (
@@ -203,7 +204,7 @@ module.exports = webpackMerge(commonConfig, {
     // prevent vendor hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
-      chunks: ['vendor']
+      chunks: ['vendor', 'polyfills']
     })
   ],
 
